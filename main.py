@@ -2,6 +2,7 @@
 import sys
 import random
 import requests
+import time
 
 sys.path.insert(0, sys.path[0] + '\\proto')
 sys.path.insert(0, sys.path[0] + '/proto')
@@ -65,7 +66,10 @@ def run_command(name, from_id, cmd, author_id, date):
 
         key, keyboard = get_keyboard()
         put_user_answer(from_id, key)
-        telebot.send_photo(from_id, 'words/' + key + '.png')
+	print 3
+	time.sleep(1)
+	path= 'words/' + key + '.png'
+        telebot.send_photo(from_id, path)
         telebot.send_text_with_keyboard(from_id, "_", keyboard)
 
 
@@ -163,6 +167,9 @@ if __name__ == "__main__":
     telebot = Telegram()
     telebot.send_text(ADMIN_ID, "Run on {0}".format(telebot.host))
     while True:
+	if check_updates() != 1:
+                time.sleep(telebot.Interval)
+	'''
         try:
             if check_updates() != 1:
                 time.sleep(telebot.Interval)
@@ -173,3 +180,4 @@ if __name__ == "__main__":
             break
         except Exception, e:
             log_event(str(e))
+	'''

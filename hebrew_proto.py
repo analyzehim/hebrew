@@ -83,7 +83,7 @@ def get_keyboard():
       files_list.remove('.DS_Store')
    except:
       pass
-   print files_list
+   #print files_list
    sample = random.sample(files_list, 4)
    key = sample[0].split('.')[0]
    sample = [i.split('.')[0] for i in sample]

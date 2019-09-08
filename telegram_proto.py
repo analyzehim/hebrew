@@ -2,8 +2,9 @@
 import requests
 import time
 import socket
-
-
+import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # requests.packages.urllib3.disable_warnings()  # Подавление InsecureRequestWarning, с которым я пока ещё не разобрался
 ADMIN_ID = 74102915  # My ID
 
@@ -19,7 +20,7 @@ class Telegram:
 
     def get_updates(self):
         data = {'offset': self.offset + 1, 'limit': 5, 'timeout': 0}
-        request = requests.post(self.URL + self.TOKEN + '/getUpdates', data=data)
+        request = requests.post(self.URL + self.TOKEN + '/getUpdates', data=data, verify=False)
         if (not request.status_code == 200) or (not request.json()['ok']):
             return False
 
@@ -68,7 +69,7 @@ class Telegram:
             except:
                 log_event('Error with LOGGING')
             data = {'chat_id': chat_id, 'text': text}  # Request create
-            request = requests.post(self.URL + self.TOKEN + '/sendMessage', data=data)  # HTTP request
+            request = requests.post(self.URL + self.TOKEN + '/sendMessage', data=data, verify=False)  # HTTP request
 
             if not request.status_code == 200:  # Check server status
                 return False
@@ -78,8 +79,8 @@ class Telegram:
         log_event('Sending photo to %s: %s' % (chat_id, imagePath))  # Logging
         data = {'chat_id': chat_id}
         files = {'photo': (imagePath, open(imagePath, "rb"))}
-        requests.post(self.URL + self.TOKEN + '/sendPhoto', data=data, files=files)
-        request = requests.post(self.URL + self.TOKEN + '/sendPhoto', data=data, files=files)  # HTTP request
+        requests.post(self.URL + self.TOKEN + '/sendPhoto', data=data, files=files, verify=False)
+        request = requests.post(self.URL + self.TOKEN + '/sendPhoto', data=data, files=files, verify=False)  # HTTP request
         if not request.status_code == 200:  # Check server status
             return False
 
@@ -88,7 +89,7 @@ class Telegram:
     def ping(self):
             log_event('Sending to %s: %s' % (self.chat_id, 'ping'))
             data = {'chat_id': self.chat_id, 'text': 'ping'}
-            requests.post(self.URL + self.TOKEN + '/sendMessage', data=data)  # HTTP request
+            requests.post(self.URL + self.TOKEN + '/sendMessage', data=data, verify=False)  # HTTP request
 
 
 def log_event(text):
