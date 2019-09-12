@@ -49,7 +49,11 @@ def run_command(name, from_id, cmd, author_id, date):
         telebot.send_text(from_id, "Start!")
         key, keyboard = get_keyboard()
         put_user_answer(from_id, key)
-        telebot.send_photo(from_id, 'words/'+key + '.png')
+        try:
+            telebot.send_photo(from_id, 'words/'+key + '.png')
+        except:
+            telebot.send_photo(from_id, 'words/' + key + '.PNG')
+
         telebot.send_text_with_keyboard(from_id, "_", keyboard)
 
     else:
@@ -71,7 +75,10 @@ def run_command(name, from_id, cmd, author_id, date):
     print 3
     time.sleep(1)
     path= 'words/' + key + '.png'
-    telebot.send_photo(from_id, path)
+    try:
+        telebot.send_photo(from_id, 'words/' + key + '.png')
+    except:
+        telebot.send_photo(from_id, 'words/' + key + '.PNG')
     telebot.send_text_with_keyboard(from_id, "_", keyboard)
 
 
