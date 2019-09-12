@@ -11,6 +11,7 @@ ADMIN_ID = 74102915  # My ID
 class Telegram:
     def __init__(self):
         self.TOKEN = '294555914:AAHBHZW8sjA3-oPFNZx98G9vesH-ObDBlAQ'
+        self.TOKEN = '357941877:AAGdDwh8APfdfO_voutaE8SBdkbdwzV1GEg' #test
         self.URL = 'https://api.telegram.org/bot'
         self.chat_id = 74102915
         self.offset = 0
@@ -93,7 +94,7 @@ class Telegram:
 
 
 def log_event(text):
-        f = open('log.txt', 'a')
+        f = open('hebrew_log.txt', 'a')
         event = '%s >> %s' % (time.ctime(), text)
         print event + '\n'
         f.write(event + '\n')
